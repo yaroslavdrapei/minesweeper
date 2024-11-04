@@ -1,11 +1,14 @@
 #include "Field.h"
 
-Field::Field(int minesCount, Cell startingCell) : minesCount(minesCount) {
+Field::Field(int minesCount) : minesCount(minesCount) {
     for (int row = 0; row < GRID_HEIGHT; row++) {
         for (int col = 0; col < GRID_WIDTH; col++) {
             grid[row][col] = make_shared<Cell>(col, row);
         }
     }
+}
+
+void Field::init(Cell startingCell) {
     this->generateMines(startingCell);
     this->generateMap();
 }
@@ -85,14 +88,28 @@ vector<shared_ptr<Cell>> Field::getNeighbors(Cell cell) {
 
 bool Field::dig(Cell cell) {
     cellsDug++;
-    Grass* grass = dynamic_cast<Grass*>(grid[cell.getX()][cell.getY()].get());
+    Grass* grass = dynamic_cast<Grass*>(grid[cell.getY()][cell.getX()].get());
 
-    if (grass) {
-        grass->setIsClicked(true);
-        return true;
+    if (!grass) {
+        grid[cell.getY()][cell.getX()]->setIsClicked(true);
+        return false;
     }
 
-    return false;
+    grass->setIsClicked(true);
+    if (grass->getMinesAroundCount() == 0) {
+        vector<shared_ptr<Cell>> neighbors = this->getNeighbors(cell);
+        for (auto& neighbor : neighbors) {
+            if (neighbor->getIsClicked()) continue;
+            this->dig(*neighbor);
+        }
+    }
+
+    return true;
+}
+
+void Field::toggleMark(Cell cell) {
+    shared_ptr<Cell> actualCell = grid[cell.getY()][cell.getX()];
+    actualCell->setIsMarked(!actualCell->getIsMarked());
 }
 
 bool Field::mapCleared() {

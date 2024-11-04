@@ -14,6 +14,10 @@ bool Cell::getIsClicked() {
     return isClicked;
 }
 
+bool Cell::getIsMarked() {
+    return isMarked;
+}
+
 void Cell::setX(int newX) {
     if (newX < 0 || newX > GRID_WIDTH) {
         x = 0;
@@ -34,6 +38,10 @@ void Cell::setY(int newY) {
 
 void Cell::setIsClicked(bool newIsClicked) {
     isClicked = newIsClicked;
+}
+
+void Cell::setIsMarked(bool newIsMarked) {
+    isMarked = newIsMarked;
 }
 
 bool Cell::operator==(Cell other) {
