@@ -19,6 +19,6 @@ public:
     void generateMines(Cell startingCell);
     void generateMap();
     vector<shared_ptr<Cell>> getNeighbors(Cell cell);
-    bool dig();
+    bool dig(Cell cell);
     bool mapCleared();
 };

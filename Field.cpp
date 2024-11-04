@@ -83,10 +83,18 @@ vector<shared_ptr<Cell>> Field::getNeighbors(Cell cell) {
     return neighbors;
 }
 
-bool Field::dig() {
+bool Field::dig(Cell cell) {
+    cellsDug++;
+    Grass* grass = dynamic_cast<Grass*>(grid[cell.getX()][cell.getY()].get());
+
+    if (grass) {
+        grass->setIsClicked(true);
+        return true;
+    }
+
     return false;
 }
 
 bool Field::mapCleared() {
-    return false;
+    return GRID_WIDTH * GRID_HEIGHT - minesCount == cellsDug;
 }
