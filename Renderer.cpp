@@ -76,7 +76,7 @@ void Renderer::render(Field *field) {
                 window.draw(rect);
             }
 
-            if (cell->getIsMarked()) {
+            if (!cell->getIsClicked() && cell->getIsMarked()) {
                 sf::Sprite flag;
 
                 flag.setTexture(flagTexture);
