@@ -17,6 +17,8 @@ add_executable(minesweeper main.cpp
         Field.h
         Field.cpp
         Renderer.h
-        Renderer.cpp)
+        Renderer.cpp
+        MyColors.h
+        MyColors.cpp)
 
 target_link_libraries(minesweeper sfml-system sfml-window sfml-graphics sfml-audio sfml-network)
