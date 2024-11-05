@@ -23,4 +23,5 @@ public:
     bool dig(Cell cell);
     void toggleMark(Cell cell);
     bool mapCleared();
+    void restart();
 };

@@ -115,3 +115,11 @@ void Field::toggleMark(Cell cell) {
 bool Field::mapCleared() {
     return GRID_WIDTH * GRID_HEIGHT - minesCount == cellsDug;
 }
+
+void Field::restart() {
+    for (int row = 0; row < GRID_HEIGHT; row++) {
+        for (int col = 0; col < GRID_WIDTH; col++) {
+            grid[row][col] = make_shared<Cell>(col, row);
+        }
+    }
+}
