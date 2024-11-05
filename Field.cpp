@@ -1,4 +1,5 @@
 #include "Field.h"
+#include <iostream>
 
 Field::Field(int minesCount) : minesCount(minesCount) {
     for (int row = 0; row < GRID_HEIGHT; row++) {
@@ -113,7 +114,26 @@ void Field::toggleMark(Cell cell) {
 }
 
 bool Field::mapCleared() {
-    return GRID_WIDTH * GRID_HEIGHT - minesCount == cellsDug;
+    Grass* grass = dynamic_cast<Grass*>(grid[0][0].get());
+    Mine* mine = dynamic_cast<Mine*>(grid[0][0].get());
+
+    if (!grass && !mine) {
+        return false;
+    }
+
+    for (int row = 0; row < GRID_HEIGHT; row++) {
+        for (int col = 0; col < GRID_WIDTH; col++) {
+            Grass* grass = dynamic_cast<Grass*>(grid[row][col].get());
+
+            if (grass) {
+                if (!grass->getIsClicked()) {
+                    return false;
+                }
+            }
+        }
+    }
+
+    return true;
 }
 
 void Field::restart() {
